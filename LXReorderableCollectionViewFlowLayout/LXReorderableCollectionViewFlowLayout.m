@@ -175,6 +175,13 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
                                                           repeats:YES];
 }
 
+- (void)shouldMiniminizeCurrentView:(BOOL)shouldMinimize
+{
+    CGFloat factor = shouldMinimize ? 0.5f : 1.0f;
+    
+    self.currentView.transform = CGAffineTransformMakeScale(factor, factor);
+}
+
 #pragma mark - Target/Action methods
 
 // Tight loop, allocate memory sparely, even if they are stack allocation.
@@ -381,6 +388,8 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
         default: break;
     }
 }
+
+
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer {
     switch (gestureRecognizer.state) {

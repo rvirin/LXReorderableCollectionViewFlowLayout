@@ -19,6 +19,8 @@
 
 - (void)setUpGestureRecognizersOnCollectionView __attribute__((deprecated("Calls to setUpGestureRecognizersOnCollectionView method are not longer needed as setup are done automatically through KVO.")));
 
+- (void)shouldMiniminizeCurrentView:(BOOL)shouldMinimize;
+
 @end
 
 @protocol LXReorderableCollectionViewDatasource <NSObject>
