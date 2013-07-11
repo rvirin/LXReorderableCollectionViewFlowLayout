@@ -37,10 +37,13 @@
 @protocol LXReorderableCollectionViewDelegate <NSObject>
 @optional
 
+- (void)collectionView:(UICollectionView *)collectionView isDraggingItemAtIndexPath:(NSIndexPath *)indexPath atPosition:(CGPoint)center;
 - (void)collectionView:(UICollectionView *)collectionView willBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)collectionView:(UICollectionView *)collectionView didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)collectionView:(UICollectionView *)collectionView willEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)collectionView:(UICollectionView *)collectionView didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeleteItemAtIndexPath:(NSIndexPath *)indexPath;
+
+
 
 @end

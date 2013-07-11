@@ -51,6 +51,7 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
 @property (assign, nonatomic) CGPoint currentViewCenter;
 @property (assign, nonatomic) CGPoint panTranslationInCollectionView;
 @property (strong, nonatomic) NSTimer *scrollingTimer;
+@property (nonatomic, assign) BOOL currentViewIsMinimize;
 
 @property (assign, nonatomic, readonly) id<LXReorderableCollectionViewDatasource> dataSource;
 @property (assign, nonatomic, readonly) id<LXReorderableCollectionViewDelegate> delegate;
@@ -178,8 +179,13 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
 - (void)shouldMiniminizeCurrentView:(BOOL)shouldMinimize
 {
     CGFloat factor = shouldMinimize ? 0.5f : 1.0f;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.currentView.transform = CGAffineTransformMakeScale(factor, factor);
+        
+    } completion:^(BOOL finished) {
+        self.currentViewIsMinimize = shouldMinimize;
+    }];
     
-    self.currentView.transform = CGAffineTransformMakeScale(factor, factor);
 }
 
 #pragma mark - Target/Action methods
@@ -397,25 +403,16 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
         case UIGestureRecognizerStateChanged: {
             self.panTranslationInCollectionView = [gestureRecognizer translationInView:self.collectionView];
             
-            CGRect collectionViewFrame = self.collectionView.frame; 
+            CGRect collectionViewFrame = self.collectionView.frame;
 
             CGPoint newPoint =  LXS_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
             
-//            CGPoint newOrigin = CGPointMake(newPoint.x - self.currentView.frame.size.width / 2,
-//                                            newPoint.y - self.currentView.frame.size.height / 2);
-//            
-//            CGPoint newOriginOppposite = CGPointMake(newPoint.x + self.currentView.frame.size.width / 2,
-//                                                     newPoint.y + self.currentView.frame.size.height / 2);
-//            
-//            newPoint.x = newOrigin.x >= 0 ? newPoint.x : self.currentViewCenter.x;
-//            newPoint.x = newOriginOppposite.x <= self.collectionView.contentSize.width ? newPoint.x : self.currentViewCenter.x;
-//            
-//            newPoint.y = newOrigin.y >= 0 ? newPoint.y : self.currentViewCenter.y;
-//            newPoint.y = newOriginOppposite.y <= self.collectionView.contentSize.height ? newPoint.y : self.currentViewCenter.y;
-//            
-//            NSLog(@"new origin opposite %@ height max %.0f",[NSValue valueWithCGPoint:newOriginOppposite],self.collectionView.contentSize.height);
-            
             CGPoint viewCenter = self.currentView.center = newPoint;
+            
+            if ([self.delegate respondsToSelector:@selector(collectionView:isDraggingItemAtIndexPath:atPosition:)])
+            {
+                [self.delegate collectionView:self.collectionView isDraggingItemAtIndexPath:self.selectedItemIndexPath atPosition:viewCenter];
+            }
             
             [self invalidateLayoutIfNecessary];
             
