@@ -10,6 +10,9 @@
 
 #define LX_FRAMES_PER_SECOND 60.0
 
+
+#define CELL_SIZE CGSizeMake(174, 135)
+
 #ifndef CGGEOMETRY_LXSUPPORT_H_
 CG_INLINE CGPoint
 LXS_CGPointAdd(CGPoint point1, CGPoint point2) {
@@ -449,6 +452,48 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
         } break;
     }
 }
+
+/**************************************************************************************************/
+#pragma mark - UICollectionView initial state
+
+/*
+-(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
+{
+    UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+
+    if (itemIndexPath.row == 0 && itemIndexPath.section == 0)
+    {
+        attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
+        attributes.size = CELL_SIZE;
+        attributes.frame = CGRectMake(0, 0, CELL_SIZE.width, CELL_SIZE.height);
+        attributes.zIndex = 1;
+    }
+
+    return attributes;
+}
+
+
+-(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)elementIndexPath
+{
+    UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind atIndexPath:elementIndexPath];
+    
+    if ([elementKind isEqualToString:UICollectionElementKindSectionHeader] &&
+        elementIndexPath.row == 0 &&
+        elementIndexPath.section == 0)
+    {
+        attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:elementIndexPath];
+        attributes.size = CELL_SIZE;
+        attributes.frame = CGRectMake(0, 0, CELL_SIZE.width, CELL_SIZE.height);
+
+        attributes.zIndex = 0;
+    }
+    
+    return attributes;
+}
+ 
+ */
+
+ 
 
 #pragma mark - UICollectionViewFlowLayoutDelegate methods
 
