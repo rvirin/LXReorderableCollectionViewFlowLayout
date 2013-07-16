@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, PlayingCardSuit) {
-    PlayingCardSuitSpade,
-    PlayingCardSuitHeart,
-    PlayingCardSuitClub,
-    PlayingCardSuitDiamond
+typedef NS_ENUM (NSInteger, PlayingCardSuit) {
+	PlayingCardSuitSpade,
+	PlayingCardSuitHeart,
+	PlayingCardSuitClub,
+	PlayingCardSuitDiamond
 };
 
 @interface PlayingCard : NSObject
