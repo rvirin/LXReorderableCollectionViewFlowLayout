@@ -454,9 +454,7 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 		case UIGestureRecognizerStateBegan :
 		case UIGestureRecognizerStateChanged : {
 			self.panTranslationInCollectionView = [gestureRecognizer translationInView:self.collectionView];
-
-			CGRect collectionViewFrame = self.collectionView.frame;
-
+            
 			CGPoint newPoint =  LXS_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
 
 			CGPoint viewCenter = self.currentView.center = newPoint;
@@ -518,42 +516,22 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 /**************************************************************************************************/
 #pragma mark - UICollectionView initial state
 
-/*
- * -(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
- * {
- *  UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
- *
- *  if (itemIndexPath.row == 0 && itemIndexPath.section == 0)
- *  {
- *      attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
- *      attributes.size = CELL_SIZE;
- *      attributes.frame = CGRectMake(0, 0, CELL_SIZE.width, CELL_SIZE.height);
- *      attributes.zIndex = 1;
- *  }
- *
- *  return attributes;
- * }
- *
- *
- * -(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)elementIndexPath
- * {
- *  UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind atIndexPath:elementIndexPath];
- *
- *  if ([elementKind isEqualToString:UICollectionElementKindSectionHeader] &&
- *      elementIndexPath.row == 0 &&
- *      elementIndexPath.section == 0)
- *  {
- *      attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:elementIndexPath];
- *      attributes.size = CELL_SIZE;
- *      attributes.frame = CGRectMake(0, 0, CELL_SIZE.width, CELL_SIZE.height);
- *
- *      attributes.zIndex = 0;
- *  }
- *
- *  return attributes;
- * }
- *
- */
+-(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
+{
+    UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+    
+    if (itemIndexPath.row == 0 && itemIndexPath.section == 0 && self.isAddingANewItem)
+    {
+        self.isAddingANewItem = NO;
+        attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
+        attributes.size = CELL_SIZE;
+        attributes.frame = CGRectMake(-CELL_SIZE.width, 0, CELL_SIZE.width, CELL_SIZE.height);
+    }
+    
+    return attributes;
+}
+
+
 
 
 

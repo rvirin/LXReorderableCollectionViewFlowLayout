@@ -9,6 +9,7 @@
 
 @interface LXReorderableCollectionViewFlowLayout : UICollectionViewFlowLayout <UIGestureRecognizerDelegate>
 
+@property (nonatomic, assign) BOOL isAddingANewItem;
 @property (strong, nonatomic) UIView *currentView;
 @property (strong, nonatomic) NSIndexPath *selectedItemIndexPath;
 
