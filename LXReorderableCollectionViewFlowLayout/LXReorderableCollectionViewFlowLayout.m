@@ -447,6 +447,54 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 	}
 }
 
+- (CGPoint)computeNewViewCenter
+{
+    CGPoint viewCenter = self.currentViewCenter;
+    CGPoint newPoint = LXS_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
+    
+    CGRect newFrame = self.currentView.frame;
+    
+    newFrame.origin.x += self.panTranslationInCollectionView.x;
+    newFrame.origin.y += self.panTranslationInCollectionView.y;
+    
+    
+    if (CGRectContainsRect(self.collectionView.frame, newFrame))
+    {
+        viewCenter = self.currentView.center = newPoint;
+    }
+    else
+    {
+        CGPoint originRight = newFrame.origin;
+        originRight.x += newFrame.size.width;
+        
+        CGPoint originDown = newFrame.origin;
+        originDown.y += newFrame.size.height;
+        
+        // Right
+        if (originRight.x - self.collectionView.frame.size.width >= 0)
+        {
+            newPoint.x = self.currentView.center.x;
+        }
+        
+        // Bottom
+        if (originDown.y - self.collectionView.frame.size.height >= 0)
+        {
+            newPoint.y = self.currentView.center.y;
+        }
+        
+        // Top
+        if (newFrame.origin.y <= 0)
+        {
+            newPoint.y = self.currentView.center.y;
+        }
+        
+        // No left in our case
+        
+        viewCenter = self.currentView.center = newPoint;
+    }
+    return viewCenter;
+}
+
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
 {
 	switch (gestureRecognizer.state)
@@ -454,11 +502,10 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 		case UIGestureRecognizerStateBegan :
 		case UIGestureRecognizerStateChanged : {
 			self.panTranslationInCollectionView = [gestureRecognizer translationInView:self.collectionView];
+                        
+            CGPoint viewCenter = [self computeNewViewCenter];
+
             
-			CGPoint newPoint =  LXS_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
-
-			CGPoint viewCenter = self.currentView.center = newPoint;
-
 			if ([self.delegate respondsToSelector:@selector(collectionView:isDraggingItemAtIndexPath:atPosition:)])
 			{
 				[self.delegate collectionView:self.collectionView isDraggingItemAtIndexPath:self.selectedItemIndexPath atPosition:viewCenter];

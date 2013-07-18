@@ -1,6 +1,19 @@
 LXReorderableCollectionViewFlowLayout
 =====================================
 
+Why this fork ?
+===============
+
+I forked this layout for adding this features:
+
+ - In my case the collection view header is a button to add a new cell, or to suppress one.
+  - I added the  method `- (void)shouldMiniminizeCurrentView:(BOOL)shouldMinimize;` to minimize the cell, by 50%
+  - I added the delegate method `- (void)collectionView:(UICollectionView *)collectionView isDraggingItemAtIndexPath:(NSIndexPath *)indexPath atPosition:(CGPoint)center;` The delegate is always aware of the cell position. 
+ - When adding a new cell at indexpath [0,0], and setting the `isAddingANewItem` to YES, the added cell will come from the left.
+
+
+
+
 Extends `UICollectionViewFlowLayout` to support reordering of cells. Similar to long press and pan on books in iBook.
 
 Features
