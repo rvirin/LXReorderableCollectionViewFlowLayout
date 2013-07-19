@@ -451,11 +451,10 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 {
     CGPoint viewCenter = self.currentViewCenter;
     CGPoint newPoint = LXS_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
-    
+
+    CGPoint newOrigin = CGPointMake(newPoint.x - self.currentView.frame.size.width / 2, newPoint.y - self.currentView.frame.size.height / 2);
     CGRect newFrame = self.currentView.frame;
-    
-    newFrame.origin.x += self.panTranslationInCollectionView.x;
-    newFrame.origin.y += self.panTranslationInCollectionView.y;
+    newFrame.origin = newOrigin;
     
     
     if (CGRectContainsRect(self.collectionView.frame, newFrame))
