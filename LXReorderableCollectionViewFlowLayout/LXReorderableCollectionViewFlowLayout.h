@@ -45,6 +45,4 @@
 - (void)collectionView:(UICollectionView *)collectionView didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeleteItemAtIndexPath:(NSIndexPath *)indexPath;
 
-
-
 @end

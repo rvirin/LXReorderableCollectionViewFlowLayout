@@ -579,9 +579,6 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 }
 
 
-
-
-
 #pragma mark - UICollectionViewFlowLayoutDelegate methods
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
