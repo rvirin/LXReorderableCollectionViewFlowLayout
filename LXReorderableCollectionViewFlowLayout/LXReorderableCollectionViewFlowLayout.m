@@ -567,7 +567,7 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 {
     UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
     
-    if (itemIndexPath.row == 0 && itemIndexPath.section == 0 && self.isAddingANewItem)
+    if (itemIndexPath.row == 1 && itemIndexPath.section == 0 && self.isAddingANewItem)
     {
         self.isAddingANewItem = NO;
         attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
