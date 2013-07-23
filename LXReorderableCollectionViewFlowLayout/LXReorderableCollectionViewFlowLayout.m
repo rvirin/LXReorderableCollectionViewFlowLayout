@@ -11,7 +11,7 @@
 #define LX_FRAMES_PER_SECOND 60.0
 
 
-#define CELL_SIZE            CGSizeMake(174, 135)
+#define CELL_SIZE            CGSizeMake(160, 120)
 
 #ifndef CGGEOMETRY_LXSUPPORT_H_
 CG_INLINE CGPoint
