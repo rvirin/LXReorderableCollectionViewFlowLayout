@@ -10,9 +10,6 @@
 
 #define LX_FRAMES_PER_SECOND 60.0
 
-
-#define CELL_SIZE            CGSizeMake(160, 120)
-
 #ifndef CGGEOMETRY_LXSUPPORT_H_
 CG_INLINE CGPoint
 LXS_CGPointAdd(CGPoint point1, CGPoint point2)
@@ -570,8 +567,8 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
     {
         self.isAddingANewItem = NO;
         attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
-        attributes.size = CELL_SIZE;
-        attributes.frame = CGRectMake(-CELL_SIZE.width, 0, CELL_SIZE.width, CELL_SIZE.height);
+        attributes.size = self.itemSize;
+        attributes.frame = CGRectMake(-self.itemSize.width, 0, self.itemSize.width, self.itemSize.height);
     }
     
     return attributes;
