@@ -83,7 +83,8 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 	{
 		if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
 		{
-			[gestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
+            // TODO: this make the app crash...
+			//[gestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
 		}
 	}
 	_longPressGestureRecognizer = longPressGestureRecognizer;
