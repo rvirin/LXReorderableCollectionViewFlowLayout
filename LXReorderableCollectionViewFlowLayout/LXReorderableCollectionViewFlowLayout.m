@@ -54,7 +54,6 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 @property (assign, nonatomic) CGPoint currentViewCenter;
 @property (assign, nonatomic) CGPoint panTranslationInCollectionView;
 @property (strong, nonatomic) NSTimer *scrollingTimer;
-@property (nonatomic, assign) BOOL currentViewIsMinimize;
 
 @property (assign, nonatomic, readonly) id<LXReorderableCollectionViewDatasource> dataSource;
 @property (assign, nonatomic, readonly) id<LXReorderableCollectionViewDelegate> delegate;
@@ -203,14 +202,10 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
 														  repeats:YES];
 }
 
-- (void)shouldMiniminizeCurrentView:(BOOL)shouldMinimize
+- (void)shouldResizeCurrentViewWithFactor:(CGFloat)factor
 {
-	CGFloat factor = shouldMinimize ? 0.5f : 1.0f;
-
 	[UIView animateWithDuration:0.2 animations:^{
 		 self.currentView.transform = CGAffineTransformMakeScale(factor, factor);
-	 } completion:^(BOOL finished) {
-		 self.currentViewIsMinimize = shouldMinimize;
 	 }];
 }
 
@@ -464,8 +459,6 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
     }
     else
     {
-        DLog(@"collection view frame : %@",[NSValue valueWithCGRect:collectionViewWholeFrame]);
-        DLog(@"collection view content size : %@",[NSValue valueWithCGSize:self.collectionView.contentSize]);
         CGPoint originRight = newFrame.origin;
         originRight.x += newFrame.size.width;
         
