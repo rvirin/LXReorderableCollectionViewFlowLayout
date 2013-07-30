@@ -454,13 +454,18 @@ static NSString *const kLXCollectionViewKeyPath = @"collectionView";
     CGRect newFrame = self.currentView.frame;
     newFrame.origin = newOrigin;
     
+    CGRect collectionViewWholeFrame = self.collectionView.frame;
+    collectionViewWholeFrame.size = self.collectionView.contentSize;
     
-    if (CGRectContainsRect(self.collectionView.frame, newFrame))
+    
+    if (CGRectContainsRect(collectionViewWholeFrame, newFrame))
     {
         viewCenter = self.currentView.center = newPoint;
     }
     else
     {
+        DLog(@"collection view frame : %@",[NSValue valueWithCGRect:collectionViewWholeFrame]);
+        DLog(@"collection view content size : %@",[NSValue valueWithCGSize:self.collectionView.contentSize]);
         CGPoint originRight = newFrame.origin;
         originRight.x += newFrame.size.width;
         
